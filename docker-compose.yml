@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  db:
+    build:
+      context: ./build
+      dockerfile: Dockerfile.postgres
+    restart: always
+    environment:
+      POSTGRES_USER: api
+      POSTGRES_PASSWORD: api
+  api:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile.api
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/usr/src/app/
+    links:
+      - db
+      
